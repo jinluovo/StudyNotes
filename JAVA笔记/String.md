@@ -53,3 +53,37 @@ String today = sdf.format(d);
 * 常用方法：
 
 ![Math](../Picture/Math.jpg)
+## break语句直接结束外层循环：
+用一个标签（紧跟着英文冒号的标识符）标识外层循环
+```java
+public static void main(String[] args){
+//		外层循环，outer作为标识符
+  outer:
+    for(int i = 0; i < 5; i++){
+      for(int j = 0; j < 3 ; j++){
+        System.out.println("i的值为：" + i + "j的值为：" + j);
+        if(j == 1){
+//						跳出outer标签所标识的循环
+          break outer;
+        }
+      }
+    }
+}
+```
+## continue语句直接跳过标签所标识循环的当次循环的剩下语句，重新开始下一次循环
+```java
+public static void main(String[] args){
+  outer:
+    for(int i = 0; i < 5 ; i++ ){
+      for(int j = 0; j < 3 ; j++){
+        System.out.println("i的值为：" + i + "j的值为：" + j);
+        if(j == 1){
+//						忽略outer标签所指定的循环中本次循环所剩下的语句
+          continue outer;
+        }
+      }
+    }
+}
+```
+## return 用于结束一个方法
+return 也可以结束一个循环，但与continue和break不同的是，return直接结束整个方法，不管这个return处于多少层循环之内
