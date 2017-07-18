@@ -225,6 +225,9 @@ span{
 	+ `<tr>`：表格的一行
 	+ `<td>`：表格的一个单元格
 	+ `<th>`：表格头部的一个单元格，表格表头
+  + cellspace：可以设置表格各单元格边框之间距离为0px
+  + colspan：跨列合并单元格
+  + rowspan：跨行合并单元格
 ```html
 <table>
   <tbody>
@@ -331,3 +334,4 @@ span{
   <label for="控件id名">
   ```
     + 标签的for属性中的值应当与相关控件的id属性值一样
+  + `<frameset>`：框架集标签，将页面进行区域划分，有此标签时，不需要`<body>`标签，cols：垂直切割  rows：水平切割（参数值相加为100%） `<frame src="***">` `<frame name="***">`（name通常结合超链接的target属性来使用）
