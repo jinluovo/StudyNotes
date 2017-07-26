@@ -283,15 +283,19 @@ span{
 + 使用表单标签 `<form>` ，与用户交互：
 ```html
 <!-- 语法 -->
-<form method="传送方式" action="服务器文件">
+<form method="传送方式" action="服务器文件" >
 ```
       action：浏览者输入的数据被传送到的地方，比如一个PHP页面（save.php）
       method：数据传送的方式（get/post）
+      
+        get：以明文的方式通过URL提交数据，数据在URL中可以看到，提交的数据最多不超过2K。安全性较低，但效率比post方式高，适合提交 数据量不大安全性不高的数据，如：搜索查询等功能
+        post：将用户提交的信息封装在 HTML HEADER 内，适合提交数据量大安全性高的用户信息，比如注册、修改、上传等功能
+
       所有的表单控件（文本框、文本域、按钮、单选框、复选框等）都必须放在`<form>`和`</form>`标签之间，否则用户输入的信息可能提交不到服务器上。
   + 文本输入框、密码输入框
   ```html
   <form>
-  <input type="text/password" name="名称" value="文本">
+  <input type="text/password" name="名称" value="文本" placeholder="提示用户输入信息" maxlength="最大长度" readonly="readonly">
   </form>
   ```
     + type:当type为text时，输入框作为文本输入框；当type为password时，输入框作为密码输入框
