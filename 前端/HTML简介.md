@@ -122,13 +122,13 @@ name='Bill "HelloWorld" Gates'
 #### HTML 文本格式化：
 * 文本格式化标签:           
 
-![1](E:\Github\StudyNotes\Picture\文本格式化标签.png)
+![1](..\Picture\文本格式化标签.png)
 * 计算机输出标签：
 
-![2](E:\Github\StudyNotes\Picture\计算机输出标签.png)
+![2](..\Picture\计算机输出标签.png)
 * 定义引用和术语：
 
-![3](E:\Github\StudyNotes\Picture\定义引用和术语.png)
+![3](..\Picture\定义引用和术语.png)
 
 
 #### HTML CSS：
@@ -287,7 +287,7 @@ span{
 ```
       action：浏览者输入的数据被传送到的地方，比如一个PHP页面（save.php）
       method：数据传送的方式（get/post）
-      
+
         get：以明文的方式通过URL提交数据，数据在URL中可以看到，提交的数据最多不超过2K。安全性较低，但效率比post方式高，适合提交 数据量不大安全性不高的数据，如：搜索查询等功能
         post：将用户提交的信息封装在 HTML HEADER 内，适合提交数据量大安全性高的用户信息，比如注册、修改、上传等功能
 

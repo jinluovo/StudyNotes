@@ -150,7 +150,8 @@ JavaScript：能够让整个页面具有动态效果，向HTML页面添加交互
           1） 使用String对象中的 match 方法
           2） 使用正则对象中的 test 方法     
       js中函数编写方式：
-          1） 关键字 funcation ，函数名自定义
+          1） 关键字 funcation 函数名()，函数名自定义
+          2） 匿名函数 var 函数名 = function(){}
    ```javascript
    <script type="text/javascript">
     //  方式一：声明函数
@@ -202,12 +203,14 @@ window.setInterval(code,millisec)
 
 6. Browser对象：
   + Windows对象
+
   ![Window1](../Picture/Window1.png)
-  ![Window2](../Picture/Window2.png)
   + History对象
+
   ![History1](../Picture/History1.png)
   ![History2](../Picture/History2.png)
   + Location对象
+
   ![Location1](../Picture/Location1.png)
   ![Location2](../Picture/Location2.png)
   + Navigator对象
