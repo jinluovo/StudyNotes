@@ -1,0 +1,210 @@
+# 建造者模式
++ 定义：建造者模式又称为**生成器模式**，它是一种较为复杂，使用频率也相对较低的创建型模式。他为客户端返回的不是一个简单的产品，而是一个由多个部件组成的复杂的产品。
++ 组成：
+  + 抽象建造者类（Builder）：为创建一个Product对象的各个部件指定抽象接口。在该类（或接口）中一般声明两类方法：
+    + buildPartX()，用于创建复杂对象的各个部件。
+    + getResult()，用于返回复杂对象。
+  + 具体建造者类（ConcreteBuilder）:实现了Builder接口，实现各个部件的具体构造和装配方法，定义并明确其所创建的复杂对象。
+  + 产品角色（Product）：他是被构建的复杂对象，包含多个组件，具体建造者创建该产品的内部表示并定义其装配过程。
+  + 指挥者类（Director）：复杂安排复杂对象的建造次序，完成复杂对象的构造。客户端一般只需要和指挥者交互即可。
++ 实现：
+
+  复杂产品类（Product）：
+  ```Java
+  public class Actor {
+    private String type;          //角色类型
+    private String sex;           //性别
+    private String face;          //脸型
+    private String costume;       //服装
+    private String haircut;       //发型
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getFace() {
+        return face;
+    }
+
+    public void setFace(String face) {
+        this.face = face;
+    }
+
+    public String getCostume() {
+        return costume;
+    }
+
+    public void setCostume(String costume) {
+        this.costume = costume;
+    }
+
+    public String getHaircut() {
+        return haircut;
+    }
+
+    public void setHaircut(String haircut) {
+        this.haircut = haircut;
+    }
+  }
+  ```
+
+  抽象建造者类（Builder）：
+  ```Java
+  public abstract class ActorBuilder {
+    protected Actor actor = new Actor();
+
+    public abstract void buildType();
+    public abstract void buildSex();
+    public abstract void buildFace();
+    public abstract void buildCostume();
+    public abstract void buildHaircut();
+
+    public Actor getResult(){
+        return actor;
+    }
+  }
+  ```
+
+  具体建造者类（这里只贴出一种）：
+  ```Java
+  //天使角色建造者
+public class AngelBuilder extends ActorBuilder{
+    @Override
+    public void buildType() {
+        actor.setType("天使");
+    }
+
+    @Override
+    public void buildSex() {
+        actor.setSex("女");
+    }
+
+    @Override
+    public void buildFace() {
+        actor.setFace("漂亮");
+    }
+
+    @Override
+    public void buildCostume() {
+        actor.setCostume("白裙");
+    }
+
+    @Override
+    public void buildHaircut() {
+        actor.setHaircut("长发");
+    }
+  }
+  ```
+
+  指挥者类：
+  ```Java
+  public class ActorController {
+    //逐步构建复杂产品对象
+    public Actor construct(ActorBuilder ab){
+        Actor actor;
+        ab.buildType();
+        ab.buildSex();
+        ab.buildFace();
+        ab.buildCostume();
+        ab.buildHaircut();
+        actor = ab.getResult();
+        return actor;
+    }
+  }
+  ```
+
+  客户类：
+  ```Java
+  public class Client {
+    public static void main(String[] args) {
+        ActorBuilder ab;                //针对抽象建造者编程
+        ab = (ActorBuilder) XMLUtil.getBean();
+
+        ActorController ac = new ActorController();
+        Actor actor = ac.construct(ab);
+
+        System.out.println(actor.getType() + "的外观：");
+        System.out.println("性别：" + actor.getSex());
+        System.out.println("面容：" + actor.getFace());
+        System.out.println("服装：" + actor.getCostume());
+        System.out.println("发型：" + actor.getHaircut());
+    }
+  }
+  ```
+
+  运行结果：
+  ```
+  天使的外观：
+  性别：女
+  面容：漂亮
+  服装：白裙
+  发型：长发
+  ```
+
+  在代码中通过配置文件获取具体要建造的角色，在之后的修改中也符合开闭原则。
+
++ 关于指挥者类 Director
+  + *省略 Director *：在某些情况下，为了简化系统结构，可以将Director与Builder合并，在Builder中提供逐步构建产品对象的construct()方法。或者也可以将construct()方法的参数去掉，直接使用this调用buildPartX()方法。
+  + 使用钩子方法（Hook Method）：通常使用钩子方法来控制是否调用某个buildPartX()方法，通常返回值是Boolean类型，定义在抽象建造者类中。
+
+    抽象建造者类:
+    ```Java
+    public abstract class ActorBuilder {
+      protected Actor actor = new Actor();
+
+      public abstract void buildType();
+      public abstract void buildSex();
+      public abstract void buildFace();
+      public abstract void buildCostume();
+      public abstract void buildHaircut();
+
+      //钩子方法
+      public boolean isBareheaded(){
+          return false;
+      }
+
+      public Actor getResult(){
+          return actor;
+      }
+    }
+    ```
+    具体建造者类：
+    ```Java
+    //覆盖父类钩子方法
+    @Override
+    public boolean isBareheaded() {
+        return true;
+    }
+    ```
+    指挥者类：
+    ```Java
+    ab.buildType();
+    ab.buildSex();
+    ab.buildFace();
+    ab.buildCostume();
+    //不是光头就设置发型
+    if(!ab.isBareheaded()) {
+        ab.buildHaircut();
+    }
+    ```
+
+### 总结：
++ 优点：
+  + 客户不需要知道产品内部的组成细节，将产品本身与产品的创建过程解耦，使得相同创建过程可以创建不同的产品。
+  + 每一个具体建造者之间相互独立，可以方便的替换或者添加新的具体建造者。由于指挥者针对抽象建造者编程，增加新的具体建造者无需修改原有代码，扩展方便，符合开闭原则。
+  + 可以更加精细的控制产品的创建过程。
++ 缺点：
+  + 建造者模式创建的产品一般具有较多的共同点，其组成部分相似，若产品间差异较大，则不适合使用建造者模式。
+  + 若产品内部结构复杂多变，可能需要定义很多具体建造者来实现这种变化，导致系统变得很庞大。
